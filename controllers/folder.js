@@ -40,3 +40,21 @@ exports.deleteFolder = (req, res, next) => {
         })
     })
 }
+
+exports.listFiles = async (req, res, next) => {
+
+    folder = await Folder.findOne({
+        user: req.user,
+        _id: req.body.id
+    })
+
+    return File.find({
+        folderid: folder,
+        userid: req.user
+    }).then(result => {
+        res.status(200).json({
+            message: "Files Fetched successfully",
+            files: result
+        })
+    })
+}

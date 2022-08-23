@@ -1,7 +1,12 @@
 const express = require("express")
+const bodyParse = require("body-parser")
 
 app = express()
 PORT = 8080
+
+// Adding JSON Body Parser
+app.use(bodyParse.json())
+
 
 // Adding a test route
 app.get("/test", (req, res, next) => {

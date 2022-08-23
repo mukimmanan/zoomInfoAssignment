@@ -1,5 +1,5 @@
 const moongoose = require("mongoose")
-const Schema = moongose.Schema
+const Schema = moongoose.Schema
 
 const Folder = new Schema({
     name: {
@@ -13,4 +13,4 @@ const Folder = new Schema({
     }
 }, {timestamps: true})
 
-module.exports = moongose.mode("Folder", Folder)
+module.exports = moongoose.model("Folder", Folder)

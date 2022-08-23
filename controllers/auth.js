@@ -6,7 +6,7 @@ exports.signup = (req, res, next) => {
         salt = "frfkjsdncfjksdncjksnd"; 
         hash = crypto.pbkdf2Sync(req.body.password, salt,  
             1000, 64, `sha512`).toString(`hex`); 
-        // password``
+        
         newUser = new User({
             username: req.body.username,
             password: hash,

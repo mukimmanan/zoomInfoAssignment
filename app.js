@@ -18,7 +18,45 @@ app.get("/test", (req, res, next) => {
     })
 })
 
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Headers", "Authorization", "Content-Type")
+    next()
+})
+
+// Setting the user in req object if Authorization header set
+app.use(async (req, res, next) => {
+    const userId = req.headers.authorization
+    if (userId) {
+        await User.findById(userId).then(user => {
+            req.user = user
+            req.isAuthenticated = true
+        }).catch(_ => {
+            req.isAuthenticated = false
+        })
+    }
+
+    next()
+})
+
+authenticatedGuard = (req, res, next) => {
+    if (!req.isAuthenticated) {
+        return res.json({
+            message: "User not Authenticated"
+        })
+    }
+    next()
+}
+
 app.use("/auth", authRoutes)
+
+// Adding a test auth route
+app.get("/auth-test", authenticatedGuard, (req, res, next) => {
+    return res.json({
+        message: "Your server is working fine",
+        userid: req.user.id
+    })
+})
 
 mongoose.connect("mongodb://localhost:27017/assignmentDB").then(_ => {
     app.listen(PORT, (error) => {

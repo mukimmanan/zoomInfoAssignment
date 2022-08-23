@@ -3,6 +3,8 @@ const bodyParse = require("body-parser")
 const moongoose = require("mongoose")
 const { default: mongoose } = require("mongoose")
 
+const authRoutes = require("./routes/auth")
+
 app = express()
 PORT = 8080
 
@@ -15,6 +17,8 @@ app.get("/test", (req, res, next) => {
         message: "Your server is working fine"
     })
 })
+
+app.use("/auth", authRoutes)
 
 mongoose.connect("mongodb://localhost:27017/assignmentDB").then(_ => {
     app.listen(PORT, (error) => {

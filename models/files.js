@@ -17,7 +17,8 @@ const File = new Schema({
     folderid: {
         type: Schema.Types.ObjectId,
         ref: 'Folder',
-        required: false
+        required: false,
+        index: true
     }
 
 }, {timestamps: true})

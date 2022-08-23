@@ -11,7 +11,7 @@ exports.createFolder = (req, res, next) => {
             message: "Folder Successfully Created",
             id: result._id
         })
-    }).catch(res.status(400).json({
+    }).catch(error => res.status(400).json({
         message: "Folder Not Created"
     }))
 }

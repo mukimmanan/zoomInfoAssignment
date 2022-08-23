@@ -6,6 +6,7 @@ const User = require("./models/user")
 
 const authRoutes = require("./routes/auth")
 const folderRoutes = require("./routes/folder")
+const fileRoutes = require("./routes/file")
 
 app = express()
 PORT = 8080
@@ -52,6 +53,8 @@ authenticatedGuard = (req, res, next) => {
 
 app.use("/auth", authRoutes)
 app.use("/folder", authenticatedGuard, folderRoutes)
+app.use("/file", authenticatedGuard, fileRoutes)
+
 
 // Adding a test auth route
 app.get("/auth-test", authenticatedGuard, (req, res, next) => {

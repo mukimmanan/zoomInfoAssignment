@@ -53,3 +53,25 @@ exports.updateFile = (req, res, next) => {
     })
 }
 
+exports.moveFile = async (req, res, next) => {
+    fileId = req.body.id
+    newFolderId = req.body.newFolderid
+
+    file = await File.findOne({
+        _id: fileId,
+        userid: req.user
+    })
+
+    if (newFolderId) {
+        file.folderid = newFolderId
+        await file.save()
+    } else {
+        file.folderid = null
+        await file.save()
+    }
+
+    return res.status(200).json({
+        message: "File Moved Successfully"
+    })
+
+}

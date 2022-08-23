@@ -23,4 +23,4 @@ const File = new Schema({
 
 }, {timestamps: true})
 
-module.exports = Schema.model("File", File)
+module.exports = mongoose.model("File", File)

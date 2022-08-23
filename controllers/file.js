@@ -1,4 +1,4 @@
-const File = require("../models/file")
+const File = require("../models/files")
 
 exports.createFile = (req, res, next) => {
     tempFile = new File({

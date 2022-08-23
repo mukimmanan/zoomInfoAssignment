@@ -1,4 +1,6 @@
 const Folder = require("../models/folder")
+const File = require("../models/files")
+
 
 exports.createFolder = (req, res, next) => {
     tempFolder = new Folder({
@@ -22,8 +24,15 @@ exports.deleteFolder = (req, res, next) => {
         _id: req.body.id
     }).then(result => {
         // Deleting all file logic
-        res.status(200).json({
-            message: "Folder deleted successfully"
+        File.deleteMany({
+            userid: req.user,
+            folderid: req.body.id
+        }).then(_ => {
+            res.status(200).json({
+                message: "Folder deleted successfully"
+            })
+        }).catch(_ => {
+            console.log("Error Occurred")
         })
     }).catch(_ => {
         res.status(400).json({

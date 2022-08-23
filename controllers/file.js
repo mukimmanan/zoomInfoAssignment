@@ -18,3 +18,19 @@ exports.createFile = (req, res, next) => {
         })
     })
 }
+
+exports.deleteFile = (req, res, next) => {
+    File.deleteOne({
+        userid: req.user,
+        _id: req.body.id,
+        folderid: req.body.folderid
+    }).then(_ => {
+        res.status(200).json({
+            message: "File Deleted Successfully"
+        })
+    }).catch(_ => {
+        res.status(200).json({
+            message: "File Deletion unsuccessful"
+        })
+    })
+}

@@ -2,6 +2,7 @@ const express = require("express")
 const bodyParse = require("body-parser")
 const moongoose = require("mongoose")
 const { default: mongoose } = require("mongoose")
+const User = require("./models/user")
 
 const authRoutes = require("./routes/auth")
 

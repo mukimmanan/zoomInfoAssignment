@@ -8,6 +8,10 @@ const authRoutes = require("./routes/auth")
 const folderRoutes = require("./routes/folder")
 const fileRoutes = require("./routes/file")
 
+const Folder = require("./models/folder")
+const File = require("./models/files")
+const folder = require("./models/folder")
+
 app = express()
 PORT = 8080
 
@@ -61,6 +65,40 @@ app.get("/auth-test", authenticatedGuard, (req, res, next) => {
     return res.json({
         message: "Your server is working fine",
         userid: req.user.id
+    })
+})
+
+// home route
+app.get("/", authenticatedGuard, async (req, res, next) => {
+    files = await File.find({
+        userid: req.user,
+        folderid: null
+    })
+
+    output = {
+        files: files
+    }
+
+    folders = await Folder.find({
+        user: req.user
+    })
+
+    folders = folders.map(async (folder) => {
+        files_ = await File.find({
+            user: req.user,
+            folderid: folder.folderid
+        })
+
+        tempt = {...folder._doc, files_}
+        return tempt
+    })
+
+    Promise.all(folders).then(result => {
+        output.folders = result
+        return res.json({
+            message: "Your server is working fine",
+            userdata: output
+        })
     })
 })
 

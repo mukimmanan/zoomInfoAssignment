@@ -64,7 +64,7 @@ app.get("/auth-test", authenticatedGuard, (req, res, next) => {
     })
 })
 
-mongoose.connect("mongodb://localhost:27017/assignmentDB").then(_ => {
+mongoose.connect("mongodb://mongo/assignmentDB").then(_ => {
     app.listen(PORT, (error) => {
         if (!error) {
             console.log("Server is successfully created and is Running on Port = " + PORT)

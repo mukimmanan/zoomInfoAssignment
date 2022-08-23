@@ -22,11 +22,11 @@ exports.createFile = (req, res, next) => {
 exports.deleteFile = (req, res, next) => {
     File.deleteOne({
         userid: req.user,
-        _id: req.body.id,
-        folderid: req.body.folderid
-    }).then(_ => {
+        _id: req.body.id
+    }).then(result => {
         res.status(200).json({
-            message: "File Deleted Successfully"
+            message: "File Deleted Successfully",
+            result: result
         })
     }).catch(_ => {
         res.status(200).json({
@@ -34,3 +34,22 @@ exports.deleteFile = (req, res, next) => {
         })
     })
 }
+
+exports.updateFile = (req, res, next) => {
+    return File.findOneAndUpdate({
+        userid: req.user,
+        _id: req.body.id
+    }, {
+        content: req.body.content
+    }).then(result => {
+        res.status(200).json({
+            message: "File Updated Successfully",
+            result: result
+        })
+    }).catch(_ => {
+        res.status(400).json({
+            message: "File not Updated"
+        })
+    })
+}
+

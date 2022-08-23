@@ -15,3 +15,20 @@ exports.createFolder = (req, res, next) => {
         message: "Folder Not Created"
     }))
 }
+
+exports.deleteFolder = (req, res, next) => {
+    return Folder.findOneAndDelete({
+        userid: req.user,
+        _id: req.body.id
+    }).then((req, res, next) => {
+        // Deleting all file logic
+
+        res.status(200).json({
+            message: "Folder deleted successfully"
+        })
+    }).catch(_ => {
+        res.status(400).json({
+            message: "Folder deletion was unsuccessfully"
+        })
+    })
+}

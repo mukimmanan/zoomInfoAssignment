@@ -1,0 +1,25 @@
+{
+  "name": "zoominfoassignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mukimmanan/zoomInfoAssignment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mukimmanan/zoomInfoAssignment/issues"
+  },
+  "homepage": "https://github.com/mukimmanan/zoomInfoAssignment#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongo": "^0.1.0",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19"
+  }
+}

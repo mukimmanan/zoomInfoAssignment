@@ -5,6 +5,7 @@ const { default: mongoose } = require("mongoose")
 const User = require("./models/user")
 
 const authRoutes = require("./routes/auth")
+const folderRoutes = require("./routes/folder")
 
 app = express()
 PORT = 8080
@@ -50,6 +51,7 @@ authenticatedGuard = (req, res, next) => {
 }
 
 app.use("/auth", authRoutes)
+app.use("/folder", authenticatedGuard, folderRoutes)
 
 // Adding a test auth route
 app.get("/auth-test", authenticatedGuard, (req, res, next) => {

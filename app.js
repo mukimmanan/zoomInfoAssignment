@@ -1,6 +1,5 @@
 const express = require("express")
 const bodyParse = require("body-parser")
-const moongoose = require("mongoose")
 const { default: mongoose } = require("mongoose")
 const User = require("./models/user")
 
@@ -10,7 +9,8 @@ const fileRoutes = require("./routes/file")
 
 const Folder = require("./models/folder")
 const File = require("./models/files")
-const folder = require("./models/folder")
+
+const jwt = require('jsonwebtoken');
 
 app = express()
 PORT = 8080
@@ -33,7 +33,10 @@ app.use((req, res, next) => {
 
 // Setting the user in req object if Authorization header set
 app.use(async (req, res, next) => {
-    const userId = req.headers.authorization
+    let jwtSecretKey = "hello"
+    if (req.headers.authorization) {
+        const verified = jwt.verify(req.headers.authorization, jwtSecretKey);
+        const userId = verified.id
     if (userId) {
         await User.findById(userId).then(user => {
             req.user = user
@@ -42,7 +45,7 @@ app.use(async (req, res, next) => {
             req.isAuthenticated = false
         })
     }
-
+    }
     next()
 })
 

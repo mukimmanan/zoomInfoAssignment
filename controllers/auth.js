@@ -1,5 +1,6 @@
 const User = require("../models/user")
 const crypto = require("crypto")
+const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
     if (req.body.username && req.body.password && req.body.firstName && req.body.lastName) {
@@ -32,7 +33,7 @@ exports.signup = (req, res, next) => {
 }
 
 exports.signin = (req, res, next) => {
-    console.log(req.body)
+    let jwtSecretKey = "hello"
     if (req.body.username && req.body.password) {
         salt = "frfkjsdncfjksdncjksnd"; 
         hash = crypto.pbkdf2Sync(req.body.password, salt,  
@@ -46,15 +47,17 @@ exports.signin = (req, res, next) => {
                 res.status(400).json({
                     message: "Error Occurred 1"
                 }) 
-            }
-            res.status(200).json({
+            } else {
+                const token = jwt.sign({id: result._id}, jwtSecretKey);
+                res.status(200).json({
                 message: "User Found",
-                id: result._id
+                token: token
             })
+            }
         }).catch(error => {
             console.log(error)
             res.status(400).json({
-                message: "Error Occurred 1"
+                message: "Error Occurred 2"
             })  
         })
     }

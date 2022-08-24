@@ -62,6 +62,19 @@ exports.moveFile = async (req, res, next) => {
         userid: req.user
     })
 
+    if (newFolderid) {
+        newFolder = await Folder.findOne({
+            _id: newFolderid,
+            userid: req.user
+        })
+    
+        if (!newFolder) {
+            return res.status(200).json({
+                message: "New Folder not found"
+            })
+        }   
+    }
+
     if (newFolderId) {
         file.folderid = newFolderId
         await file.save()
